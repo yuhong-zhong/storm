@@ -85,7 +85,7 @@ public class LatencyStatAndMetric implements IMetric {
         numBuckets = Math.max(numBuckets, 2);
         //We want to capture the full time range, so the target size is as
         // if we had one bucket less, then we do
-        _tmSize = 10 * 60 * 1000 / (numBuckets - 1);
+        _tmSize = 1000 / (numBuckets - 1);
         _thSize = 3 * 60 * 60 * 1000 / (numBuckets - 1);
         _odSize = 24 * 60 * 60 * 1000 / (numBuckets - 1);
         if (_tmSize < 1 || _thSize < 1 || _odSize < 1) {
@@ -225,7 +225,7 @@ public class LatencyStatAndMetric implements IMetric {
             count = _currentCountBucket;
         }
         long timeSpent = now - _bucketStart;
-        ret.put("600", readApproximateLatAvg(lat, count, timeSpent, _tmTime, _tmLatBuckets, _tmCountBuckets, 600 * 1000));
+        ret.put("600", readApproximateLatAvg(lat, count, timeSpent, _tmTime, _tmLatBuckets, _tmCountBuckets, 1000));
         ret.put("10800", readApproximateLatAvg(lat, count, timeSpent, _thTime, _thLatBuckets, _thCountBuckets, 10800 * 1000));
         ret.put("86400", readApproximateLatAvg(lat, count, timeSpent, _odTime, _odLatBuckets, _odCountBuckets, 86400 * 1000));
         long allTimeCountSum = count + _allTimeCount;

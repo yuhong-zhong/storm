@@ -74,7 +74,7 @@ public class CountStatAndMetric implements IMetric{
         numBuckets = Math.max(numBuckets, 2);
         //We want to capture the full time range, so the target size is as
         // if we had one bucket less, then we do
-        _tmSize = 10 * 60 * 1000 / (numBuckets - 1);
+        _tmSize = 1000 / (numBuckets - 1);
         _thSize = 3 * 60 * 60 * 1000 / (numBuckets - 1);
         _odSize = 24 * 60 * 60 * 1000 / (numBuckets - 1);
         if (_tmSize < 1 || _thSize < 1 || _odSize < 1) {
@@ -174,7 +174,7 @@ public class CountStatAndMetric implements IMetric{
         Map<String, Long> ret = new HashMap<>();
         long value = _currentBucket.get();
         long timeSpent = now - _bucketStart;
-        ret.put("600", readApproximateTime(value, timeSpent, _tmTime, _tmBuckets, 600 * 1000));
+        ret.put("600", readApproximateTime(value, timeSpent, _tmTime, _tmBuckets, 1000));
         ret.put("10800", readApproximateTime(value, timeSpent, _thTime, _thBuckets, 10800 * 1000));
         ret.put("86400", readApproximateTime(value, timeSpent, _odTime, _odBuckets, 86400 * 1000));
         ret.put(":all-time", value + _allTime);
